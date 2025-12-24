@@ -20,18 +20,10 @@ final class CriteriaBuilder
      * @var array<string, class-string<StampInterface>>
      */
     public $aliases = array(
-        'context' => 'Flasher\Prime\Stamp\ContextStamp',
+        'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
         'created_at' => 'Flasher\Prime\Stamp\CreatedAtStamp',
         'delay' => 'Flasher\Prime\Stamp\DelayStamp',
-        'handler' => 'Flasher\Prime\Stamp\HandlerStamp',
         'hops' => 'Flasher\Prime\Stamp\HopsStamp',
-        'preset' => 'Flasher\Prime\Stamp\PresetStamp',
-        'priority' => 'Flasher\Prime\Stamp\PriorityStamp',
-        'translation' => 'Flasher\Prime\Stamp\TranslationStamp',
-        'unless' => 'Flasher\Prime\Stamp\UnlessStamp',
-        'uuid' => 'Flasher\Prime\Stamp\UuidStamp',
-        'view' => 'Flasher\Prime\Stamp\ViewStamp',
-        'when' => 'Flasher\Prime\Stamp\WhenStamp',
     );
 
     /**
@@ -181,7 +173,9 @@ final class CriteriaBuilder
         }
 
         /** @var string $strategy */
-        $strategy = isset($this->criteria['stamps_strategy']) ? $this->criteria['stamps_strategy'] : StampsSpecification::STRATEGY_OR;
+        $strategy = isset($this->criteria['stamps_strategy'])
+            ? $this->criteria['stamps_strategy']
+            : StampsSpecification::STRATEGY_OR;
 
         /** @var array<string, class-string<StampInterface>> $stamps */
         $stamps = (array) $this->criteria['stamps'];

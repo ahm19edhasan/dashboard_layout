@@ -22,7 +22,11 @@ final class RemoveListener implements EventSubscriberInterface
 
         foreach ($event->getEnvelopesToRemove() as $envelope) {
             $hopsStamp = $envelope->get('Flasher\Prime\Stamp\HopsStamp');
-            if (!$hopsStamp instanceof HopsStamp || 1 === $hopsStamp->getAmount()) {
+            if (!$hopsStamp instanceof HopsStamp) {
+                continue;
+            }
+
+            if (1 === $hopsStamp->getAmount()) {
                 $envelopesToRemove[] = $envelope;
 
                 continue;

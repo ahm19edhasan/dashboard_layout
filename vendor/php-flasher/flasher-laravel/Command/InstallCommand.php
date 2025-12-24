@@ -9,14 +9,14 @@ namespace Flasher\Laravel\Command;
 
 use Flasher\Laravel\Support\ServiceProvider as FlasherServiceProvider;
 use Flasher\Prime\Plugin\PluginInterface;
-use Flasher\Laravel\Bridge\Command\FlasherCommand;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InstallCommand extends FlasherCommand
+class InstallCommand extends Command
 {
     /**
      * @return void
@@ -32,7 +32,7 @@ class InstallCommand extends FlasherCommand
     /**
      * @return int
      */
-    protected function flasherExecute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('');
         $output->writeln('<fg=blue;options=bold>

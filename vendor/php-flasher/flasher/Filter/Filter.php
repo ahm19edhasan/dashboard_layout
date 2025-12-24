@@ -65,7 +65,7 @@ final class Filter
         $this->applyOrdering();
         $this->applyLimit();
 
-        return array_values($this->envelopes);
+        return $this->envelopes;
     }
 
     /**
@@ -134,7 +134,7 @@ final class Filter
      */
     private function applyOrdering()
     {
-        if (array() === $this->orderings) {
+        if (null === $this->orderings) {
             return;
         }
 

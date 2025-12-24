@@ -21,6 +21,16 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Display the login view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function createAdmin()
+    {
+        return view('auth.admin_login');
+    }
+
+    /**
      * Handle an incoming authentication request.
      *
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
@@ -36,6 +46,21 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Handle an incoming authentication request.
+     *
+     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeAdmin(LoginRequest $request)
+    {
+        $request->authenticateAdmin();
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
      * Destroy an authenticated session.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -43,7 +68,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        if( Auth::guard('web')->check() ){
+            Auth::guard('web')->logout();
+        }else{
+            Auth::guard('admin')->logout();
+        }
 
         $request->session()->invalidate();
 

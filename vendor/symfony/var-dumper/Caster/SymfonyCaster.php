@@ -31,9 +31,6 @@ class SymfonyCaster
         'format' => 'getRequestFormat',
     ];
 
-    /**
-     * @return array
-     */
     public static function castRequest(Request $request, array $a, Stub $stub, bool $isNested)
     {
         $clone = null;
@@ -49,12 +46,9 @@ class SymfonyCaster
         return $a;
     }
 
-    /**
-     * @return array
-     */
     public static function castHttpClient($client, array $a, Stub $stub, bool $isNested)
     {
-        $multiKey = \sprintf("\0%s\0multi", $client::class);
+        $multiKey = sprintf("\0%s\0multi", $client::class);
         if (isset($a[$multiKey])) {
             $a[$multiKey] = new CutStub($a[$multiKey]);
         }
@@ -62,9 +56,6 @@ class SymfonyCaster
         return $a;
     }
 
-    /**
-     * @return array
-     */
     public static function castHttpClientResponse($response, array $a, Stub $stub, bool $isNested)
     {
         $stub->cut += \count($a);
@@ -77,9 +68,6 @@ class SymfonyCaster
         return $a;
     }
 
-    /**
-     * @return array
-     */
     public static function castLazyObjectState($state, array $a, Stub $stub, bool $isNested)
     {
         if (!$isNested) {
@@ -90,14 +78,12 @@ class SymfonyCaster
 
         $instance = $a['realInstance'] ?? null;
 
-        if (isset($a['status'])) { // forward-compat with Symfony 8
-            $a = ['status' => new ConstStub(match ($a['status']) {
-                LazyObjectState::STATUS_INITIALIZED_FULL => 'INITIALIZED_FULL',
-                LazyObjectState::STATUS_INITIALIZED_PARTIAL => 'INITIALIZED_PARTIAL',
-                LazyObjectState::STATUS_UNINITIALIZED_FULL => 'UNINITIALIZED_FULL',
-                LazyObjectState::STATUS_UNINITIALIZED_PARTIAL => 'UNINITIALIZED_PARTIAL',
-            }, $a['status'])];
-        }
+        $a = ['status' => new ConstStub(match ($a['status']) {
+            LazyObjectState::STATUS_INITIALIZED_FULL => 'INITIALIZED_FULL',
+            LazyObjectState::STATUS_INITIALIZED_PARTIAL => 'INITIALIZED_PARTIAL',
+            LazyObjectState::STATUS_UNINITIALIZED_FULL => 'UNINITIALIZED_FULL',
+            LazyObjectState::STATUS_UNINITIALIZED_PARTIAL => 'UNINITIALIZED_PARTIAL',
+        }, $a['status'])];
 
         if ($instance) {
             $a['realInstance'] = $instance;
@@ -107,9 +93,6 @@ class SymfonyCaster
         return $a;
     }
 
-    /**
-     * @return array
-     */
     public static function castUuid(Uuid $uuid, array $a, Stub $stub, bool $isNested)
     {
         $a[Caster::PREFIX_VIRTUAL.'toBase58'] = $uuid->toBase58();
@@ -123,9 +106,6 @@ class SymfonyCaster
         return $a;
     }
 
-    /**
-     * @return array
-     */
     public static function castUlid(Ulid $ulid, array $a, Stub $stub, bool $isNested)
     {
         $a[Caster::PREFIX_VIRTUAL.'toBase58'] = $ulid->toBase58();

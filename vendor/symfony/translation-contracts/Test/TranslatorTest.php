@@ -11,10 +11,7 @@
 
 namespace Symfony\Contracts\Translation\Test;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorTrait;
 
@@ -33,7 +30,7 @@ use Symfony\Contracts\Translation\TranslatorTrait;
  */
 class TranslatorTest extends TestCase
 {
-    private string $defaultLocale;
+    private $defaultLocale;
 
     protected function setUp(): void
     {
@@ -48,7 +45,7 @@ class TranslatorTest extends TestCase
 
     public function getTranslator(): TranslatorInterface
     {
-        return new class implements TranslatorInterface {
+        return new class() implements TranslatorInterface {
             use TranslatorTrait;
         };
     }
@@ -56,7 +53,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider getTransTests
      */
-    #[DataProvider('getTransTests')]
     public function testTrans($expected, $id, $parameters)
     {
         $translator = $this->getTranslator();
@@ -67,7 +63,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider getTransChoiceTests
      */
-    #[DataProvider('getTransChoiceTests')]
     public function testTransChoiceWithExplicitLocale($expected, $id, $number)
     {
         $translator = $this->getTranslator();
@@ -80,8 +75,6 @@ class TranslatorTest extends TestCase
      *
      * @dataProvider getTransChoiceTests
      */
-    #[DataProvider('getTransChoiceTests')]
-    #[RequiresPhpExtension('intl')]
     public function testTransChoiceWithDefaultLocale($expected, $id, $number)
     {
         $translator = $this->getTranslator();
@@ -92,7 +85,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider getTransChoiceTests
      */
-    #[DataProvider('getTransChoiceTests')]
     public function testTransChoiceWithEnUsPosix($expected, $id, $number)
     {
         $translator = $this->getTranslator();
@@ -111,7 +103,6 @@ class TranslatorTest extends TestCase
     /**
      * @requires extension intl
      */
-    #[RequiresPhpExtension('intl')]
     public function testGetLocaleReturnsDefaultLocaleIfNotSet()
     {
         $translator = $this->getTranslator();
@@ -125,12 +116,10 @@ class TranslatorTest extends TestCase
 
     public static function getTransTests()
     {
-        yield ['Symfony is great!', 'Symfony is great!', []];
-        yield ['Symfony is awesome!', 'Symfony is %what%!', ['%what%' => 'awesome']];
-
-        if (class_exists(TranslatableMessage::class)) {
-            yield ['He said "Symfony is awesome!".', 'He said "%what%".', ['%what%' => new TranslatableMessage('Symfony is %what%!', ['%what%' => 'awesome'])]];
-        }
+        return [
+            ['Symfony is great!', 'Symfony is great!', []],
+            ['Symfony is awesome!', 'Symfony is %what%!', ['%what%' => 'awesome']],
+        ];
     }
 
     public static function getTransChoiceTests()
@@ -150,7 +139,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider getInterval
      */
-    #[DataProvider('getInterval')]
     public function testInterval($expected, $number, $interval)
     {
         $translator = $this->getTranslator();
@@ -176,7 +164,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider getChooseTests
      */
-    #[DataProvider('getChooseTests')]
     public function testChoose($expected, $id, $number, $locale = null)
     {
         $translator = $this->getTranslator();
@@ -194,12 +181,10 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider getNonMatchingMessages
      */
-    #[DataProvider('getNonMatchingMessages')]
     public function testThrowExceptionIfMatchingMessageCannotBeFound($id, $number)
     {
-        $translator = $this->getTranslator();
-
         $this->expectException(\InvalidArgumentException::class);
+        $translator = $this->getTranslator();
 
         $translator->trans($id, ['%count%' => $number]);
     }
@@ -270,13 +255,13 @@ class TranslatorTest extends TestCase
             new-line in it. Selector = 0.|{1}This is a text with a
             new-line in it. Selector = 1.|[1,Inf]This is a text with a
             new-line in it. Selector > 1.', 5],
-            // with double-quotes and id split across lines
+            // with double-quotes and id split accros lines
             ['This is a text with a
             new-line in it. Selector = 1.', '{0}This is a text with a
             new-line in it. Selector = 0.|{1}This is a text with a
             new-line in it. Selector = 1.|[1,Inf]This is a text with a
             new-line in it. Selector > 1.', 1],
-            // with single-quotes and id split across lines
+            // with single-quotes and id split accros lines
             ['This is a text with a
             new-line in it. Selector > 1.', '{0}This is a text with a
             new-line in it. Selector = 0.|{1}This is a text with a
@@ -284,7 +269,7 @@ class TranslatorTest extends TestCase
             new-line in it. Selector > 1.', 5],
             // with single-quotes and \n in text
             ['This is a text with a\nnew-line in it. Selector = 0.', '{0}This is a text with a\nnew-line in it. Selector = 0.|{1}This is a text with a\nnew-line in it. Selector = 1.|[1,Inf]This is a text with a\nnew-line in it. Selector > 1.', 0],
-            // with double-quotes and id split across lines
+            // with double-quotes and id split accros lines
             ["This is a text with a\nnew-line in it. Selector = 1.", "{0}This is a text with a\nnew-line in it. Selector = 0.|{1}This is a text with a\nnew-line in it. Selector = 1.|[1,Inf]This is a text with a\nnew-line in it. Selector > 1.", 1],
             // escape pipe
             ['This is a text with | in it. Selector = 0.', '{0}This is a text with || in it. Selector = 0.|{1}This is a text with || in it. Selector = 1.', 0],
@@ -310,7 +295,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider failingLangcodes
      */
-    #[DataProvider('failingLangcodes')]
     public function testFailedLangcodes($nplural, $langCodes)
     {
         $matrix = $this->generateTestData($langCodes);
@@ -320,7 +304,6 @@ class TranslatorTest extends TestCase
     /**
      * @dataProvider successLangcodes
      */
-    #[DataProvider('successLangcodes')]
     public function testLangcodes($nplural, $langCodes)
     {
         $matrix = $this->generateTestData($langCodes);
@@ -375,14 +358,14 @@ class TranslatorTest extends TestCase
             if ($expectSuccess) {
                 $this->assertCount($nplural, $indexes, "Langcode '$langCode' has '$nplural' plural forms.");
             } else {
-                $this->assertNotCount($nplural, $indexes, "Langcode '$langCode' has '$nplural' plural forms.");
+                $this->assertNotEquals((int) $nplural, \count($indexes), "Langcode '$langCode' has '$nplural' plural forms.");
             }
         }
     }
 
     protected function generateTestData($langCodes)
     {
-        $translator = new class {
+        $translator = new class() {
             use TranslatorTrait {
                 getPluralizationRule as public;
             }

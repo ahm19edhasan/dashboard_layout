@@ -34,13 +34,13 @@ class RouterDataCollector extends DataCollector
     /**
      * @final
      */
-    public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         if ($response instanceof RedirectResponse) {
             $this->data['redirect'] = true;
             $this->data['url'] = $response->getTargetUrl();
 
-            if ($this->controllers->offsetExists($request)) {
+            if ($this->controllers->contains($request)) {
                 $this->data['route'] = $this->guessRoute($request, $this->controllers[$request]);
             }
         }
@@ -48,9 +48,6 @@ class RouterDataCollector extends DataCollector
         unset($this->controllers[$request]);
     }
 
-    /**
-     * @return void
-     */
     public function reset()
     {
         $this->controllers = new \SplObjectStorage();
@@ -62,9 +59,6 @@ class RouterDataCollector extends DataCollector
         ];
     }
 
-    /**
-     * @return string
-     */
     protected function guessRoute(Request $request, string|object|array $controller)
     {
         return 'n/a';
@@ -72,8 +66,6 @@ class RouterDataCollector extends DataCollector
 
     /**
      * Remembers the controller associated to each request.
-     *
-     * @return void
      */
     public function onKernelController(ControllerEvent $event)
     {

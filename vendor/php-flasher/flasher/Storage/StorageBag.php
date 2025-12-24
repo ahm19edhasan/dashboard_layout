@@ -28,7 +28,7 @@ final class StorageBag implements StorageInterface
      */
     public function all()
     {
-        return array_values($this->bag->get());
+        return $this->bag->get();
     }
 
     /**
@@ -39,10 +39,7 @@ final class StorageBag implements StorageInterface
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
         $envelopes = UuidStamp::indexByUuid($envelopes);
 
-        $stored = UuidStamp::indexByUuid($this->all());
-        $envelopes = array_merge($stored, $envelopes);
-
-        $this->bag->set(array_values($envelopes));
+        $this->bag->set(array_merge($this->all(), $envelopes));
     }
 
     /**
@@ -53,10 +50,7 @@ final class StorageBag implements StorageInterface
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
         $envelopes = UuidStamp::indexByUuid($envelopes);
 
-        $stored = UuidStamp::indexByUuid($this->all());
-        $envelopes = array_merge($stored, $envelopes);
-
-        $this->bag->set(array_values($envelopes));
+        $this->bag->set(array_merge($this->all(), $envelopes));
     }
 
     /**
@@ -67,10 +61,7 @@ final class StorageBag implements StorageInterface
         $envelopes = \is_array($envelopes) ? $envelopes : \func_get_args();
         $envelopes = UuidStamp::indexByUuid($envelopes);
 
-        $stored = UuidStamp::indexByUuid($this->all());
-        $envelopes = array_diff_key($stored, $envelopes);
-
-        $this->bag->set(array_values($envelopes));
+        $this->bag->set(array_diff_key($this->all(), $envelopes));
     }
 
     /**

@@ -18,21 +18,75 @@ class SettingSeeder extends Seeder
     {
         DB::table('settings')->truncate();
 
-        Setting::create([
-            'email_address' => 'test@test.com',
-            'fax_address' => '0514564644',
-            'phone_number' => '0514564644',
-            'facebook_address' => 'https://www.facebook.com/',
-            'twitter_address' => 'https://twitter.com/',
-            'product_enable' => 1,
-            'header_image' => asset('front_assets/images/CEW_LOGO1.png'),
-            'footer_image' => asset('front_assets/images/CEW_LOGO1.png'),
-            'footer_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac, mi in ut quam Lorem ipsum dolor cpiscing elit. Ac, mi in ut',
-            'certifications' => [
-                asset('front_assets/images/image-1.png'),
-                asset('front_assets/images/image-1.png'),
-                asset('front_assets/images/image-1.png'),
+        $data = [
+            [
+                'key' => 'avatar',
+                'value' => asset('dashboard_assets\media\logos\logo.png'),
+                'type' => 'image',
             ],
-        ]);
+
+            [
+                'key' => 'footer_description',
+                'value' => 'Here Is Some Words To But It Inside Footer Description, Please Do Not Remove This',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'facebook_link',
+                'value' => 'https://laravel.com',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'twitter_link',
+                'value' => 'https://laravel.com',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'instagram_link',
+                'value' => 'https://laravel.com',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'google_link',
+                'value' => 'https://laravel.com',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'linkedin_link',
+                'value' => 'https://laravel.com',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'address',
+                'value' => 'palestine',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'phone',
+                'value' => '0213564987',
+                'type' => 'text',
+            ],
+
+            [
+                'key' => 'email',
+                'value' => 'admin@system.com',
+                'type' => 'text',
+            ],
+
+        ];
+
+        foreach ( $data as $key => $value ) {
+            Setting::create([
+                'key' => $value['key'],
+                'value' => $value['value'],
+                'type' => $value['type'],
+            ]);
+        }
     }
 }
