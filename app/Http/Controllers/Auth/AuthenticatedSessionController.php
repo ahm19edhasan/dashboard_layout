@@ -17,18 +17,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
-    }
-
-    /**
-     * Display the login view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function createAdmin()
-    {
         return view('auth.admin_login');
     }
+
+    // /**
+    //  * Display the login view.
+    //  *
+    //  * @return \Illuminate\View\View
+    //  */
+    // public function createAdmin()
+    // {
+    //     return view('auth.admin_login');
+    // }
 
     /**
      * Handle an incoming authentication request.
@@ -45,20 +45,20 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
-    /**
-     * Handle an incoming authentication request.
-     *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storeAdmin(LoginRequest $request)
-    {
-        $request->authenticateAdmin();
+    // /**
+    //  * Handle an incoming authentication request.
+    //  *
+    //  * @param  \App\Http\Requests\Auth\LoginRequest  $request
+    //  * @return \Illuminate\Http\RedirectResponse
+    //  */
+    // public function storeAdmin(LoginRequest $request)
+    // {
+    //     $request->authenticateAdmin();
 
-        $request->session()->regenerate();
+    //     $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
-    }
+    //     return redirect()->intended(RouteServiceProvider::HOME);
+    // }
 
     /**
      * Destroy an authenticated session.
@@ -68,9 +68,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        if( Auth::guard('web')->check() ){
+        if (Auth::guard('web')->check()) {
             Auth::guard('web')->logout();
-        }else{
+        } else {
             Auth::guard('admin')->logout();
         }
 
@@ -78,6 +78,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/admin/login');
     }
 }

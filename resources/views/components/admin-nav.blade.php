@@ -55,29 +55,29 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-title">
-                        {{ __('lang.patients') }}
+                        {{ __('lang.users') }}
                     </span>
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('admin.index') }}">
+                        <a class="menu-link" href="{{ route('user.index') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">
-                                {{ __('lang.patients_list') }}
+                                {{ __('lang.users_list') }}
                             </span>
                         </a>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('admin.create') }}">
+                        <a class="menu-link" href="{{ route('user.create') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">
-                                {{ __('lang.add_patient') }}
+                                {{ __('lang.add_user') }}
                             </span>
                         </a>
                     </div>

@@ -14,7 +14,7 @@
                         </svg>
                     </span>
                     <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">150</div>
-                    <div class="fw-bold text-gray-400">Advertisements</div>
+                    <div class="fw-bold text-gray-400">Patients</div>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                         </svg>
                     </span>
                     <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">42</div>
-                    <div class="fw-bold text-gray-100">Advertisers</div>
+                    <div class="fw-bold text-gray-100">Orders</div>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                         </svg>
                     </span>
                     <div class="text-white fw-bolder fs-2 mb-2 mt-5">85</div>
-                    <div class="fw-bold text-white">Publishers</div>
+                    <div class="fw-bold text-white">Users</div>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
         <div class="card mb-5 mb-xl-4">
             <div class="card-header border-0 pt-5">
                 <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bolder fs-3 mb-1">Latest Advertisers</span>
+                    <span class="card-label fw-bolder fs-3 mb-1">Latest Patients</span>
                 </h3>
             </div>
             <div class="card-body py-3">
@@ -102,13 +102,13 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="ps-4"><span class="text-dark fw-bolder fs-6">Ahmed Hassan</span></td>
-                                <td>ahmed@example.com</td>
+                                <td class="ps-4"><span class="text-dark fw-bolder fs-6">Samaa Khader</span></td>
+                                <td>samaa@example.com</td>
                                 <td><span class="badge badge-light-success">Verified</span></td>
                             </tr>
                             <tr>
-                                <td class="ps-4"><span class="text-dark fw-bolder fs-6">Sara Ali</span></td>
-                                <td>sara@example.com</td>
+                                <td class="ps-4"><span class="text-dark fw-bolder fs-6">Samaa Khader</span></td>
+                                <td>samaa@example.com</td>
                                 <td><span class="badge badge-light-danger">Not Verified</span></td>
                             </tr>
                         </tbody>

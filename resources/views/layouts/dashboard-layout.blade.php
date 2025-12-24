@@ -231,9 +231,10 @@ License: For each use you must have a valid license purchased only from above li
                                                 <a href="#" class="menu-link px-5">
                                                     <span class="menu-title position-relative">Language
                                                         <span
-                                                            class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
+                                                            class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
+                                                            {{ app()->getLocale() === 'en' ? 'English' : 'Arabic' }}
                                                             <img class="w-15px h-15px rounded-1 ms-2"
-                                                                src="{{ asset('dashboard_assets/media/flags/united-states.svg') }}"
+                                                                src="{{ app()->getLocale() === 'en' ? asset('dashboard_assets/media/flags/united-states.svg') : asset('dashboard_assets/media/flags/saudi-arabia.svg') }}"
                                                                 alt="metronic" />
                                                         </span>
                                                     </span>
@@ -243,7 +244,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
                                                         <a href="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}"
-                                                            class="menu-link d-flex px-5 active">
+                                                            class="menu-link d-flex px-5 {{ app()->getLocale() === 'en' ? 'active' : '' }}">
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
                                                                     src="{{ asset('dashboard_assets/media/flags/united-states.svg') }}"
@@ -255,7 +256,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
                                                         <a href="{{ LaravelLocalization::getLocalizedURL('ar', null, [], true) }}"
-                                                            class="menu-link d-flex px-5">
+                                                            class="menu-link d-flex px-5 {{ app()->getLocale() === 'ar' ? 'active' : '' }}">
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
                                                                     src="{{ asset('dashboard_assets/media/flags/saudi-arabia.svg') }}"
@@ -325,7 +326,7 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">2021©</span>
                             <a href="https://keenthemes.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">Keenthemes</a>
+                                class="text-gray-800 text-hover-primary">ENG => Samaa Khader</a>
                         </div>
                         <!--end::Copyright-->
                         <!--begin::Menu-->

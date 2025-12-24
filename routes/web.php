@@ -1,13 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\AdsController;
-use App\Http\Controllers\Web\BlogController;
 use App\Http\Controllers\Dashboard\HomeController;
-use App\Http\Controllers\Web\PagesController;
-use App\Http\Controllers\Web\ShareController;
-use App\Http\Controllers\Web\CategoriesController;
-use App\Http\Controllers\Dashboard\AdminsController;
+use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -39,23 +34,23 @@ Route::get(LaravelLocalization::setLocale() . '/dashboard', [DashboardController
 // End Index Dashboard
 
 Route::middleware(['auth:web'])
-    ->prefix(LaravelLocalization::setLocale().'/dashboard')
+    ->prefix(LaravelLocalization::setLocale() . '/dashboard')
     ->group(function () {
 
-    Route::get('/', [HomeController::class, 'index'])->name('dashboard.home');
+        Route::get('/', [HomeController::class, 'index'])->name('dashboard.home');
 
-    // Start Admin Routes
-    Route::controller(AdminsController::class)
-        ->prefix('admins')
-        ->as('admin.')
-        ->group(function() {
-            Route::get('/', 'index')->name('index');
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}', 'update')->name('update');
-            Route::get('/delete', 'destroy')->name('delete');
-        });
-    // End Admin Routes
+        // Start Admin Routes
+        Route::controller(UsersController::class)
+            ->prefix('users')
+            ->as('user.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
+                Route::get('/delete', 'destroy')->name('delete');
+            });
+        // End Admin Routes
 
-});
+    });

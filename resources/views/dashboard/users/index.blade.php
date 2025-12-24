@@ -1,4 +1,4 @@
-<x-dashboard-layout title="{{ __('lang.patients_list') }}" subTitle="{{ __('lang.index') }}">
+<x-dashboard-layout title="{{ __('lang.users_list') }}" subTitle="{{ __('lang.index') }}">
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Post-->
         <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -12,7 +12,7 @@
                         <div class="card-title">
                             <div class="d-flex align-items-center position-relative my-1">
                                 <h5 class="count">
-                                    {{ __('lang.patients_list') }} ( 50 )
+                                    {{ __('lang.users_list') }} ( {{ $users->count() }} )
                                 </h5>
                             </div>
                         </div>
@@ -22,7 +22,7 @@
                             <!--begin::Toolbar-->
                             <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                                 <!--begin::Add customer-->
-                                <a href="{{ route('admin.create') }}" class="btn btn-primary">
+                                <a href="{{ route('user.create') }}" class="btn btn-primary">
                                     <!--begin::Svg Icon | path: icons/duotone/Navigation/Plus.svg-->
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
-                                    {{ __('lang.add_patient') }}
+                                    {{ __('lang.add_user') }}
                                 </a>
                                 <!--end::Add customer-->
                             </div>
@@ -49,7 +49,7 @@
                     <!--end::Card header-->
                     <!--begin::Card body-->
                     <div class="card-body pt-0 tableData">
-                        @include('dashboard.admins.table')
+                        @include('dashboard.users.table')
                     </div>
                     <!--end::Card body-->
                 </div>
@@ -63,15 +63,16 @@
 
     @push('js')
         <script>
-            $(document).on('click', '.adminDeleteBtn', function(e) {
+            $(document).on('click', '.userDeleteBtn', function(e) {
                 e.preventDefault();
 
-                var id = $(this).data('id');
+                let id = $(this).data('id');
 
-                console.log(id);
+                let url = "{{ route('user.delete', ['id' => ':id']) }}";
+                url = url.replace(':id', id);
 
                 $.ajax({
-                    url: "{{ route('admin.delete') }}",
+                    url: url,
                     type: "GET",
                     data: {
                         id: id,
@@ -79,21 +80,20 @@
                     success: function(data) {
                         Swal.fire(
                             'Good job!',
-                            'You Deleted The Patient!',
+                            'You Deleted The User!',
                             'success'
                         );
 
-                        $('#adminDeleteModal-' + id).modal('hide');
-
+                        $('#userDeleteModal-' + id).modal('hide');
 
                         $.ajax({
-                            url: "{{ route('admin.index', ['status' => 'under_review']) }}"
+                            url: "{{ route('user.index') }}"
                         }).done(function(data) {
                             $('.tableData').html(data);
                         })
                     },
                     error: function(data) {
-
+                        //
                     }
 
                 })

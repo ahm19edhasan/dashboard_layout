@@ -1,4 +1,4 @@
-<x-dashboard-layout title="{{ __('lang.add_patient') }}" subTitle="{{ __('lang.create') }}">
+<x-dashboard-layout title="{{ __('lang.add_user') }}" subTitle="{{ __('lang.create') }}">
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
@@ -12,7 +12,7 @@
                             <div class="d-flex align-items-center position-relative my-1">
                                 <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
                                 <span class="">
-                                    {{ __('lang.add_patient') }}
+                                    {{ __('lang.add_user') }}
                                 </span>
                                 <!--end::Svg Icon-->
                             </div>
@@ -21,7 +21,7 @@
                         <!--begin::Card title-->
                     </div>
                     <div class="card-body pt-0">
-                        <form action="{{ route('admin.store') }}" method="POST">
+                        <form action="{{ route('user.store') }}" method="POST">
                             @csrf
 
                             <div class="row">
@@ -102,7 +102,7 @@
                                                 </option>
                                                 {{-- @foreach ($roles as $role) --}}
                                                 <option value="1">
-                                                    {{ 'Admin' }}
+                                                    {{ 'User' }}
                                                 </option>
                                                 {{-- @endforeach --}}
                                             </select>
@@ -149,7 +149,7 @@
                                     <button type="submit" class="btn btn-success">
                                         Submit
                                     </button>
-                                    <a href="{{ route('admin.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('user.index') }}" class="btn btn-secondary">
                                         Back
                                     </a>
                                 </div>

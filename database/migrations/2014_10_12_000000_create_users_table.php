@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('phone_number');
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
-            $table->enum('user_type', ['advertiser', 'publisher'])->default('publisher');
             $table->rememberToken();
             $table->timestamps();
         });

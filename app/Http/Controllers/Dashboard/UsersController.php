@@ -16,7 +16,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,14 +25,14 @@ class AdminsController extends Controller
      */
     public function index(Request $request)
     {
-        $admins = Admin::query()->where('id', '!=', Auth::guard('admin')->id())->get();
+        $users = User::all();
 
 
-        if( $request->ajax() ) {
-            return view('dashboard.admins.table', compact('admins'));
+        if ($request->ajax()) {
+            return view('dashboard.users.table', compact('users'));
         }
 
-        return view('dashboard.admins.index', compact('admins'));
+        return view('dashboard.users.index', compact('users'));
     }
 
     /**
@@ -43,7 +43,7 @@ class AdminsController extends Controller
     public function create()
     {
         // $roles = Role::all();
-        return view('dashboard.admins.create', /*compact('roles')*/);
+        return view('dashboard.users.create', /*compact('roles')*/);
     }
 
     /**
@@ -62,7 +62,7 @@ class AdminsController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $admin = Admin::create([
+        $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
@@ -70,11 +70,9 @@ class AdminsController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $admin->assignRole($request->input('role'));
+        toastr()->success(__('lang.user_created'));
 
-        toastr()->success(__('lang.admin_created'));
-
-        return redirect()->route('admin.index');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -96,9 +94,9 @@ class AdminsController extends Controller
      */
     public function edit($id)
     {
-        $admin = Admin::find($id);
+        $user = User::find($id);
 
-        return view('dashboard.admins.edit', compact('admin'));
+        return view('dashboard.users.edit', compact('user'));
     }
 
     /**
@@ -119,21 +117,18 @@ class AdminsController extends Controller
         ]);
 
         $input = $request->all();
-        if(!empty($input['password'])){
+        if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
+        } else {
+            $input = Arr::except($input, array('password'));
         }
 
-        $admin = Admin::find($id);
-        $admin->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user = User::find($id);
+        $user->update($input);
 
-        $admin->assignRole($request->input('role'));
+        toastr()->success(__('lang.user_updated'));
 
-        toastr()->success(__('lang.admin_updated'));
-
-        return redirect()->route('admin.index');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -144,8 +139,8 @@ class AdminsController extends Controller
      */
     public function destroy(Request $request)
     {
-        $admin = Admin::query()->findOrFail($request->id);
+        $user = User::query()->findOrFail($request->id);
 
-        $admin->delete();
+        $user->delete();
     }
 }

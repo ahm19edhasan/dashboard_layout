@@ -1,4 +1,4 @@
-<x-dashboard-layout title="{{ __('lang.create_admin') }}" subTitle="{{ __('lang.create') }}">
+<x-dashboard-layout title="{{ __('lang.edit_user') }}" subTitle="{{ __('lang.edit') }}">
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
@@ -12,7 +12,7 @@
                             <div class="d-flex align-items-center position-relative my-1">
                                 <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
                                 <span class="">
-                                    {{ __('lang.create_admin') }}
+                                    {{ __('lang.edit_user') }}
                                 </span>
                                 <!--end::Svg Icon-->
                             </div>
@@ -21,7 +21,7 @@
                         <!--begin::Card title-->
                     </div>
                     <div class="card-body pt-0">
-                        <form action="{{ route('admin.update', ['id' => 1]) }}" method="POST">
+                        <form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST">
                             @csrf
                             @method('PUT')
 
@@ -31,7 +31,7 @@
                                         <label for="exampleFormControlInput1" class="required form-label">
                                             {{ __('lang.first_name') }}
                                         </label>
-                                        <input type="text" name="first_name" value="{{ $admin->username }}"
+                                        <input type="text" name="first_name" value="{{ $user->first_name }}"
                                             class="form-control form-control-solid @error('first_name') is-invalid @enderror"
                                             placeholder="Enter Name" />
                                         @error('first_name')
@@ -47,7 +47,7 @@
                                         <label for="exampleFormControlInput1" class="required form-label">
                                             {{ __('lang.last_name') }}
                                         </label>
-                                        <input type="text" name="last_name" value="{{ $admin->username }}"
+                                        <input type="text" name="last_name" value="{{ $user->last_name }}"
                                             class="form-control form-control-solid @error('last_name') is-invalid @enderror"
                                             placeholder="Enter Name" />
                                         @error('last_name')
@@ -63,7 +63,7 @@
                                         <label for="exampleFormControlInput1" class="required form-label">
                                             {{ __('lang.email') }}
                                         </label>
-                                        <input type="email" name="email" value="{{ $admin->email }}"
+                                        <input type="email" name="email" value="{{ $user->email }}"
                                             class="form-control form-control-solid @error('email') is-invalid @enderror"
                                             placeholder="{{ __('lang.email') }}" />
                                         @error('email')
@@ -79,7 +79,7 @@
                                         <label for="exampleFormControlInput1" class="required form-label">
                                             {{ __('lang.phone_number') }}
                                         </label>
-                                        <input type="text" name="phone_number" value="{{ $admin->mobile_number }}"
+                                        <input type="text" name="phone_number" value="{{ $user->phone_number }}"
                                             class="form-control form-control-solid @error('phone_number') is-invalid @enderror"
                                             placeholder="{{ __('lang.phone_number') }}" />
                                         @error('phone_number')
@@ -103,7 +103,7 @@
                                                 </option>
                                                 {{-- @foreach ($roles as $role) --}}
                                                 <option value="1">
-                                                    {{ 'Admin' }}
+                                                    {{ 'User' }}
                                                 </option>
                                                 {{-- @endforeach --}}
                                             </select>
